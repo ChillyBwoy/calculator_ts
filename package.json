@@ -1,0 +1,18 @@
+{
+  "name": "calculator_ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "rollup": "^1.26.0",
+    "rollup-plugin-bundle-html": "^0.2.2",
+    "rollup-plugin-postcss": "^2.0.3",
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-typescript": "^1.0.1",
+    "tslib": "^1.10.0",
+    "typescript": "^3.6.4"
+  },
+  "scripts": {
+    "start": "yarn rollup -c rollup.config.js"
+  }
+}
