@@ -2,10 +2,3 @@
 .vscode
 
 /node_modules/
-/dist/
-/build/
-
-ncp-debug.log
-npm-debug.log
-yarn-error.log
-jsconfig.json
