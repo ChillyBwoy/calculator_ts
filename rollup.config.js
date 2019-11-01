@@ -2,13 +2,14 @@
 import html from 'rollup-plugin-bundle-html';
 import postcss from 'rollup-plugin-postcss';
 import serve from 'rollup-plugin-serve';
-import typescript from 'rollup-plugin-typescript';
+import typescript from 'rollup-plugin-typescript2';
 
 export default {
   input: './src/ts/index.ts',
   output: {
     file: './build/bundle.js',
     format: 'iife',
+    sourcemap: true,
   },
   plugins: [
     html({
@@ -20,12 +21,11 @@ export default {
       plugins: [],
       extract: true,
     }),
+    typescript(),
     serve({
-      open: true,
       contentBase: [
         'build',
       ]
     }),
-    typescript(),
   ],
 };

@@ -8,11 +8,11 @@
     "rollup-plugin-bundle-html": "^0.2.2",
     "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-serve": "^1.0.1",
-    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-typescript2": "^0.25.1",
     "tslib": "^1.10.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.1-rc"
   },
   "scripts": {
-    "start": "yarn rollup -c rollup.config.js"
+    "start": "yarn rollup -c rollup.config.js --watch"
   }
 }

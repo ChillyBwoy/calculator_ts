@@ -1,48 +1,49 @@
-interface Action {
+export interface Action {
   type: string;
 }
 
-export type Update<S, A extends Action> = (
-  state: S,
-  action: A,
-  initialState: S
-) => S;
-
-type Dispatch<A extends Action> = (action: A) => void;
-
-type Unsubscribe = () => void;
+export interface Updater<S, A extends Action> {
+  init(): S;
+  update(state: S, action: A): S;
+}
 
 type Subscriber<S> = (state: S) => void;
 
-interface Store<S, A extends Action> {
+export interface Storage<S, A extends Action> {
+  subscribe(listener: Subscriber<S>): () => void;
   getState(): S;
-  subscribe(listener: Subscriber<S>): Unsubscribe;
-  dispatch: Dispatch<A>;
+  dispatch(action: A): void;
 }
 
-export function createStore<S, A extends Action>(
-  update: Update<S, A>,
-  initialState: S
-): Store<S, A> {
-  let subscribers: Array<Subscriber<S>> = [];
-  let state = {
-    ...initialState
-  };
+class Store<S, A extends Action> implements Storage<S, A> {
+  private subscribers: Array<Subscriber<S>> = [];
+  private state: S;
 
-  return {
-    getState() {
-      return state;
-    },
-    dispatch(action) {
-      state = update(state, action, initialState);
-      subscribers.forEach(s => s(state));
-    },
-    subscribe(listener) {
-      subscribers.push(listener);
-      listener(state);
-      return () => {
-        subscribers = subscribers.filter(s => s === listener);
-      };
-    }
-  };
+  constructor(private updater: Updater<S, A>) {
+    this.state = updater.init();
+  }
+
+  subscribe(listener: Subscriber<S>) {
+    this.subscribers.push(listener);
+    listener(this.state);
+    return () => {
+      this.subscribers = this.subscribers.filter(s => s === listener);
+    };
+  }
+
+  notify(): void {
+    this.subscribers.forEach(s => s(this.state));
+  }
+
+  dispatch(action: A): void {
+    console.log(action);
+    this.state = this.updater.update(this.state, action);
+    this.notify();
+  }
+
+  getState() {
+    return this.state;
+  }
 }
+
+export default Store;
