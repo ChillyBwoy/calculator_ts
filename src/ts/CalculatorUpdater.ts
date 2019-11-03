@@ -89,6 +89,9 @@ class CalculateUpdater implements Updater<State, Action> {
       }
 
       case "@calculator/operator": {
+        if (operandLeft === null) {
+          return state;
+        }
         return {
           ...state,
           value: null,

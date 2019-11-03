@@ -32,6 +32,7 @@ class Store<S, A extends Action> implements Storage<S, A> {
   }
 
   notify(): void {
+    console.log(JSON.stringify(this.state, null, 2));
     this.subscribers.forEach(s => s(this.state));
   }
 
